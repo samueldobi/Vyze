@@ -1,7 +1,7 @@
-# AGENTS.md — Opportunity Engine
+# AGENTS.md — Vyze
 
 ## Mission
-Build **Opportunity Engine**, a local-first opportunity discovery and relationship-management application for one user. It finds (1) startup and mid-sized company employment opportunities, including engineering-adjacent roles, (2) agencies that may need freelance/subcontracting/white-label technical delivery, and (3) direct clients with plausible technical needs. Prioritize North America, Europe, and Asia, including worldwide-remote contracts and relocation/visa-sponsorship possibilities. Never infer work authorization or sponsorship from a generic “remote” label.
+Build **Vyze**, a local-first opportunity discovery and relationship-management application for one user. It finds (1) startup and mid-sized company employment opportunities, including engineering-adjacent roles, (2) agencies that may need freelance/subcontracting/white-label technical delivery, and (3) direct clients with plausible technical needs. Prioritize North America, Europe, and Asia, including worldwide-remote contracts and relocation/visa-sponsorship possibilities. Never infer work authorization or sponsorship from a generic “remote” label.
 
 The user's services: full-stack web development; APIs, integrations and backend development; AI automation and workflow systems; frontend/Figma-to-code; data engineering, dashboards and analytics; technical consulting, implementation and support.
 
@@ -27,7 +27,7 @@ The user's services: full-stack web development; APIs, integrations and backend 
 Use this structure as the default; adapt only with a documented reason.
 
 ```text
-opportunity-engine/
+vyze/
   AGENTS.md
   README.md
   .env.example
@@ -36,7 +36,7 @@ opportunity-engine/
     pyproject.toml
     alembic.ini
     migrations/
-    src/opportunity_engine/
+    src/vyze/
       main.py                 # app factory / router registration
       core/                   # config, logging, security, errors
       db/                     # engine, sessions, base, migration integration

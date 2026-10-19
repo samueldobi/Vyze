@@ -1,0 +1,1 @@
+"""Company signal domain."""
