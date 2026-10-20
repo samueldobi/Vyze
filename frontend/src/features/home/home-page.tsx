@@ -55,6 +55,23 @@ export function HomePage() {
           });
         });
       });
+
+      media.add("(max-width: 768px)", () => {
+        const panels = gsap.utils.toArray<HTMLElement>(".stack-panel", stackRef.current);
+        panels.slice(0, -1).forEach((panel, index) => {
+          gsap.to(panel, {
+            scale: 0.975,
+            opacity: 0.78,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panels[index + 1],
+              start: "top 92%",
+              end: "top 12px",
+              scrub: 0.6,
+            },
+          });
+        });
+      });
       return () => media.revert();
     }, pageRef);
 
@@ -140,32 +157,51 @@ export function HomePage() {
 
         <div className="stacked-sections" ref={stackRef}>
           <section className="stack-panel stack-panel-intro" id="how-it-works">
-            <div className="home-intro">
-              <p className="eyebrow">One considered system</p>
-              <h2>From scattered public evidence to a focused next move.</h2>
-              <p>
-                Vyze is designed to make opportunity research cumulative. Every company can connect
-                to roles, signals, contacts, scoring reasons, drafts, and activity history.
+            <div className="home-intro home-purpose">
+              <p className="section-pill">What Vyze does</p>
+              <h2>
+                Find <span className="highlight-sage">work that fits</span> across jobs,
+                <span className="highlight-forest"> agency partnerships</span>, and direct clients.
+              </h2>
+              <p className="purpose-copy">
+                Vyze brings public opportunities into one private workspace—full-time roles,
+                freelance work from agencies that need technical delivery, and businesses with
+                real product or engineering needs. It connects every lead to its evidence, fit,
+                contacts, and next step so you can focus on the opportunities worth pursuing.
               </p>
             </div>
           </section>
 
           <section className="stack-panel stack-panel-workflows" id="workflows">
             <div className="workflow-grid">
-              <article>
+              <article className="workflow-card workflow-discover">
                 <span>01</span>
-                <h3>Discover across three paths</h3>
-                <p>Track startup roles, agency partnerships, and direct-client needs without forcing them into one generic pipeline.</p>
+                <h3>Discover</h3>
+                <p>Bring startup roles, agency overflow work, and direct-client needs into one focused opportunity inbox.</p>
+                <div className="workflow-demo discover-demo" aria-hidden="true">
+                  <div><i /><span><strong>Product engineer</strong><small>Startup role</small></span><b>New</b></div>
+                  <div><i /><span><strong>Delivery partner</strong><small>Agency opportunity</small></span><b>Fit</b></div>
+                  <div><i /><span><strong>Workflow rebuild</strong><small>Direct client</small></span><b>Lead</b></div>
+                </div>
               </article>
-              <article className="inverted">
+              <article className="workflow-card workflow-fit">
                 <span>02</span>
-                <h3>Rank with visible evidence</h3>
-                <p>Separate missing evidence from negative evidence, and see the reasons behind every opportunity score.</p>
+                <h3>Understand the fit</h3>
+                <p>Compare service fit, location, company signals, and accessible contacts—with the evidence behind every score.</p>
+                <div className="workflow-demo fit-demo" aria-hidden="true">
+                  <div className="fit-score"><small>Opportunity fit</small><strong>84</strong><span>High confidence</span></div>
+                  <div className="fit-bars"><i /><i /><i /></div>
+                </div>
               </article>
-              <article>
+              <article className="workflow-card workflow-reach">
                 <span>03</span>
-                <h3>Build relationships deliberately</h3>
-                <p>Research public contacts, prepare editable outreach, and record follow-ups while keeping every send under your control.</p>
+                <h3>Reach out deliberately</h3>
+                <p>Turn verified details into a personal draft, review every word, and track the relationship without automated sending.</p>
+                <div className="workflow-demo reach-demo" aria-hidden="true">
+                  <span>Hi Maya — your recent platform launch caught my attention…</span>
+                  <span>I help small teams deliver integrations without adding overhead.</span>
+                  <button type="button" tabIndex={-1}>Ready for review</button>
+                </div>
               </article>
             </div>
           </section>
