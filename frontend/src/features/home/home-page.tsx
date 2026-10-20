@@ -208,23 +208,72 @@ export function HomePage() {
 
           <section className="stack-panel stack-panel-principles" id="principles">
             <div className="principles-section">
-              <div>
-                <p className="eyebrow">Quiet infrastructure</p>
-                <h2>Your research stays local. Your judgment stays central.</h2>
+              <div className="principles-intro">
+                <p className="eyebrow">Built for a real opportunity search</p>
+                <h2>Three opportunity paths. One evidence trail.</h2>
+                <p>
+                  Vyze is a local workspace for finding employment, agency partnerships, and
+                  direct-client work without losing the context behind each lead.
+                </p>
               </div>
-              <ul>
-                <li><strong>Local first</strong><span>PostgreSQL and both app servers run on your machine.</span></li>
-                <li><strong>Evidence first</strong><span>Sources, timestamps, confidence, and unknowns remain visible.</span></li>
-                <li><strong>Human first</strong><span>Vyze assists with qualification and drafting; you make the final call.</span></li>
-              </ul>
+              <ol className="product-facts">
+                <li>
+                  <span>01</span>
+                  <div><strong>Company-first research</strong><p>Keep jobs, growth signals, public contacts, and every opportunity connected to one company record.</p></div>
+                </li>
+                <li>
+                  <span>02</span>
+                  <div><strong>Eligibility stays explicit</strong><p>Distinguish worldwide remote, country-restricted, hybrid, onsite, sponsorship, and genuinely unknown information.</p></div>
+                </li>
+                <li>
+                  <span>03</span>
+                  <div><strong>Scoring you can inspect</strong><p>Use separate criteria for startup jobs, agency partnerships, and direct clients—with reasons, confidence, and source evidence.</p></div>
+                </li>
+                <li>
+                  <span>04</span>
+                  <div><strong>Outreach stays human</strong><p>Research public business contacts, edit every draft, confirm manual sends, and track replies and follow-ups yourself.</p></div>
+                </li>
+              </ol>
+              <div className="principles-strip" aria-label="Vyze operating principles">
+                <span>Local PostgreSQL</span><span>Public sources</span><span>On-demand collection</span><span>Optional AI</span>
+              </div>
             </div>
           </section>
 
           <section className="stack-panel stack-panel-cta">
+            <div className="cta-visual">
+              <div className="cta-product-window" aria-label="Illustration of the Vyze opportunity inbox">
+                <div className="cta-product-bar">
+                  <span><i /><i /><i /></span><strong>Vyze</strong><small>Local workspace</small>
+                </div>
+                <div className="cta-product-main">
+                  <div className="cta-product-title">
+                    <span><small>Opportunity inbox</small><strong>Best next moves</strong></span>
+                    <b>Evidence view</b>
+                  </div>
+                  <div className="cta-product-focus">
+                    <span><small>Explainable fit</small><strong>Strong</strong></span>
+                    <div><b>Service match</b><i><span /></i><b>Location &amp; eligibility</b><i><span /></i><b>Contact potential</b><i><span /></i></div>
+                  </div>
+                  <div className="cta-product-paths">
+                    <div><i>01</i><span><strong>Startup jobs</strong><small>Roles matched to your experience</small></span><b>Review</b></div>
+                    <div><i>02</i><span><strong>Agency partnerships</strong><small>Overflow and white-label delivery</small></span><b>Explore</b></div>
+                    <div><i>03</i><span><strong>Direct clients</strong><small>Evidence of a technical need</small></span><b>Qualify</b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="home-cta">
-              <p className="eyebrow">The workspace is ready</p>
-              <h2>Build a pipeline you can actually explain.</h2>
-              <Link className="button button-light" to="/workspace">Enter Vyze</Link>
+              <p className="eyebrow">From research to a real next step</p>
+              <h2>Turn good evidence into your <span>next move.</span></h2>
+              <p>
+                Bring the right roles, agency partnerships, and direct-client leads into focus.
+                See why each opportunity fits, prepare a thoughtful approach, and keep every
+                relationship moving without giving up control.
+              </p>
+              <Link className="cta-button" to="/workspace">
+                Open your workspace <span aria-hidden="true">→</span>
+              </Link>
             </div>
           </section>
         </div>
