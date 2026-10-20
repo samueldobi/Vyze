@@ -1,3 +1,9 @@
+@property --orbit-progress {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 65deg;
+}
+
 :root {
   --bone: #fafafb;
   --graphite: #2c2c2b;
@@ -145,9 +151,13 @@ td span { margin-top: .25rem; color: var(--stone); font-size: .75rem; }
   color: var(--obsidian); background: var(--bone); font-family: var(--font-display);
 }
 .home-nav nav { display: flex; align-items: center; gap: 2rem; }
-.home-nav nav a { color: var(--fog); font-size: .875rem; font-weight: 500; text-decoration: none; }
-.home-nav nav a:hover { text-decoration: underline; text-underline-offset: .3rem; }
-.home-nav .button-dark { color: var(--obsidian); background: var(--bone); }
+.home-nav nav a {
+  color: var(--fog); font-size: .875rem; font-weight: 500; text-decoration: none;
+}
+.home-nav nav a:hover { color: var(--bone); }
+.home-menu-toggle, .mobile-contact-link { display: none; }
+.home-nav .button-dark { color: var(--obsidian); background: var(--bone); transition: color .2s ease, background-color .2s ease; }
+.home-nav .home-contact-link:hover { color: #10200d; background: var(--accent-green); }
 .button {
   display: inline-flex; align-items: center; justify-content: center; min-height: 2.625rem;
   padding: .625rem 1.25rem; border: 1px solid transparent; border-radius: var(--radius-pill);
@@ -166,19 +176,48 @@ td span { margin-top: .25rem; color: var(--stone); font-size: .75rem; }
   position: relative; height: 100svh; min-height: 45rem; overflow: hidden;
   display: flex; justify-content: center; background: var(--obsidian); isolation: isolate;
 }
+.home-hero-stage::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse 58% 40% at 50% 28%, rgb(17 17 17 / 78%) 0%, rgb(17 17 17 / 48%) 52%, transparent 82%);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  -webkit-mask-image: radial-gradient(ellipse 62% 44% at 50% 28%, #000 18%, rgb(0 0 0 / 72%) 58%, transparent 86%);
+  mask-image: radial-gradient(ellipse 62% 44% at 50% 28%, #000 18%, rgb(0 0 0 / 72%) 58%, transparent 86%);
+}
 .hero-orbit {
+  --orbit-progress: 65deg;
+  --orbit-radius: min(45vw, 40rem);
   position: absolute; left: 50%; bottom: -42vw; width: min(90vw, 80rem); aspect-ratio: 1;
-  translate: -50% 0; border: 1px solid rgba(250,250,251,.13); border-radius: 50%;
+  translate: -50% 0; opacity: .32; border: 1px solid rgba(250,250,251,.13); border-radius: 50%;
   box-shadow: 0 0 0 5rem rgba(250,250,251,.025), 0 0 0 11rem rgba(250,250,251,.015);
+}
+.hero-orbit::before {
+  content: ""; position: absolute; inset: -2px; border-radius: 50%;
+  background: conic-gradient(
+    from 210deg,
+    rgb(183 239 98 / 56%) 0deg,
+    rgb(183 239 98 / 72%) calc(var(--orbit-progress) - 18deg),
+    rgb(214 255 145 / 98%) var(--orbit-progress),
+    transparent calc(var(--orbit-progress) + 1deg) 360deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  filter: drop-shadow(0 0 12px rgb(183 239 98 / 45%)) drop-shadow(0 0 30px rgb(83 144 54 / 28%));
+}
+.hero-orbit::after {
+  content: ""; position: absolute; top: 50%; left: 50%; width: .7rem; height: .7rem; margin: -.35rem;
+  border-radius: 50%; background: var(--accent-green);
+  box-shadow: 0 0 1rem .3rem rgb(183 239 98 / 58%), 0 0 3rem 1rem rgb(91 151 57 / 24%);
+  transform: rotate(calc(210deg + var(--orbit-progress))) translateX(var(--orbit-radius));
 }
 .hero-copy {
   position: relative; z-index: 2; width: min(calc(100% - 3rem), 76rem);
   padding-top: clamp(8rem, 14vh, 10rem); text-align: center;
 }
 .hero-copy .eyebrow { color: var(--fog); }
-.hero-copy h1 { max-width: none; color: var(--bone); font-size: clamp(3.25rem, 7.5vw, 7rem); line-height: .92; }
+.hero-copy h1 { max-width: none; color: var(--bone); font-size: clamp(3rem, 6vw, 5.75rem); line-height: .96; }
 .hero-copy > p:not(.eyebrow) { max-width: 38rem; margin: 1.5rem auto 0; color: var(--fog); font-size: 1rem; line-height: 1.55; }
 .hero-actions { display: flex; justify-content: center; gap: .5rem; margin-top: 1.75rem; }
+.hero-actions .cta-button { margin-top: 0; }
 .scroll-cue {
   position: absolute; right: 2rem; bottom: 1.5rem; z-index: 3; margin: 0;
   color: var(--fog); font-size: .625rem; letter-spacing: .12em; text-transform: uppercase;
@@ -383,6 +422,16 @@ td span { margin-top: .25rem; color: var(--stone); font-size: .75rem; }
 }
 .footer-credit a:hover { color: #31540a; text-decoration-color: currentColor; }
 
+.contact-page {
+  min-height: 100svh; padding: 2rem max(1.5rem, calc((100vw - var(--page-max)) / 2));
+  display: flex; flex-direction: column; color: var(--bone); background: var(--obsidian);
+}
+.contact-brand { width: fit-content; color: var(--bone); font-family: var(--font-display); font-size: 1.5rem; text-decoration: none; }
+.contact-content { width: min(100%, 52rem); margin: auto 0; padding-block: 5rem; }
+.contact-content .eyebrow { color: var(--fog); }
+.contact-content h1 { margin: 0; color: var(--bone); font-size: clamp(3.5rem, 8vw, 7rem); line-height: .92; }
+.contact-content > p:not(.eyebrow) { max-width: 34rem; margin: 1.5rem 0 0; color: var(--fog); line-height: 1.65; }
+
 @media (max-width: 56rem) {
   .app-shell { grid-template-columns: 1fr; }
   .sidebar {
@@ -399,41 +448,64 @@ td span { margin-top: .25rem; color: var(--stone); font-size: .75rem; }
 }
 
 @media (max-width: 48rem) {
-  .home-nav nav { display: none; }
-  .home-hero-scroll { height: auto; }
-  .home-hero-stage { min-height: auto; padding: 8rem 1.5rem 3rem; display: block; }
-  .hero-copy { width: 100%; padding-top: 0; }
-  .hero-copy h1 { font-size: clamp(3rem, 12vw, 5.5rem); }
-  .product-frame { position: relative; left: auto; bottom: auto; width: 100%; margin-top: 4rem; translate: none; }
-  .hero-orbit, .scroll-cue { display: none; }
-  .product-body { grid-template-columns: 1fr; }
-  .product-sidebar { display: none; }
-  .stacked-sections { padding-top: .75rem; background: var(--obsidian); }
-  .stack-panel {
-    position: sticky; top: .75rem; height: auto; min-height: calc(100svh - .75rem); overflow: hidden;
-    border-radius: 1.25rem 1.25rem 0 0; box-shadow: 0 -.5rem 2rem rgb(7 10 8 / 14%);
+  .home-nav {
+    flex-wrap: wrap; gap: 1rem; background: rgb(17 17 17 / 96%);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 8%);
   }
-  .stack-panel-intro, .stack-panel-principles { min-height: max(36rem, calc(100svh - .75rem)); }
+  .home-contact-link { display: none; }
+  .home-menu-toggle {
+    width: 3rem; height: 3rem; padding: .72rem; display: grid; align-content: center; gap: .42rem;
+    border: 1px solid rgb(250 250 251 / 28%); border-radius: 50%; color: var(--bone); background: transparent;
+  }
+  .home-menu-toggle span { width: 100%; height: 2px; display: block; background: currentColor; transition: transform .2s ease; }
+  .home-menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(.26rem) rotate(45deg); }
+  .home-menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-.26rem) rotate(-45deg); }
+  .home-nav nav {
+    width: 100%; max-height: 0; overflow: hidden; display: grid; align-items: stretch; gap: 0;
+    opacity: 0; visibility: hidden; transition: max-height .25s ease, opacity .2s ease;
+  }
+  .home-nav nav.is-open { max-height: 20rem; padding: .75rem 0 1rem; opacity: 1; visibility: visible; }
+  .home-nav nav a { padding: .9rem 0; display: block; border-bottom: 1px solid rgb(203 203 203 / 25%); font-size: 1rem; }
+  .home-nav nav .mobile-contact-link { display: block; color: var(--accent-green); border-bottom-color: rgb(183 239 98 / 45%); }
+  .home-hero-scroll { height: auto; }
+  .home-hero-stage { height: auto; min-height: auto; padding: 8rem 1.5rem 4rem; overflow: visible; display: block; }
+  .home-hero-stage::after { display: none; }
+  .hero-copy { width: 100%; padding-top: 0; }
+  .hero-copy h1 { font-size: clamp(2.75rem, 10vw, 4.25rem); }
+  .product-frame {
+    position: relative; left: auto; bottom: auto; width: 100%; margin-top: 3rem; translate: none;
+    transform: none !important; opacity: 1 !important; will-change: auto;
+  }
+  .hero-orbit, .scroll-cue { display: none; }
+  .product-body { min-height: auto; grid-template-columns: 1fr; }
+  .product-sidebar { display: none; }
+  .stacked-sections { padding-top: 0; background: var(--obsidian); }
+  .stack-panel {
+    position: relative; top: auto; height: auto; min-height: auto; overflow: hidden;
+    border-radius: 1.25rem 1.25rem 0 0; box-shadow: 0 -.5rem 2rem rgb(7 10 8 / 12%);
+    transform: none !important; opacity: 1 !important; will-change: auto;
+  }
+  .stack-panel + .stack-panel { margin-top: -1.25rem; }
+  .stack-panel-intro, .stack-panel-principles { min-height: auto; }
   .stack-panel-intro { background-position: 58% center; }
   .home-purpose { width: min(calc(100% - 3rem), var(--page-max)); padding-block: 5rem; }
   .home-purpose h2 { max-width: 48rem; font-size: clamp(2.75rem, 9vw, 5rem); }
   .stack-panel-workflows { padding-block: 0; }
   .stack-panel-cta {
-    min-height: max(48rem, calc(100svh - .75rem)); grid-template-columns: 1fr;
-    grid-template-rows: 42svh auto;
+    min-height: auto; grid-template-columns: 1fr; grid-template-rows: auto auto;
   }
+  .cta-visual { min-height: 28rem; }
   .cta-visual::after { background: linear-gradient(180deg, transparent 75%, var(--obsidian)); }
   .cta-product-window { width: min(88%, 34rem); transform: rotate(-1deg) scale(.82); }
   .home-cta { padding: 3rem 1.5rem 4rem; }
   .home-cta h2 { font-size: clamp(2.75rem, 12vw, 4.5rem); }
   .workflow-grid {
-    width: 100%; padding: 1.5rem 1rem; display: flex; overflow-x: auto; gap: .75rem;
-    scroll-snap-type: x mandatory; scrollbar-width: none;
+    width: min(calc(100% - 2rem), var(--page-max)); padding: 4rem 0; display: grid;
+    grid-template-columns: 1fr; overflow: visible; gap: .75rem;
   }
-  .workflow-grid::-webkit-scrollbar { display: none; }
   .workflow-grid article {
-    flex: 0 0 min(84vw, 24rem); height: calc(100svh - 4.5rem); min-height: 32rem;
-    padding: 1.5rem; scroll-snap-align: center;
+    height: auto; min-height: 30rem; padding: 1.5rem;
   }
   .workflow-grid h3 { margin: 2rem 0 .75rem; font-size: 2.25rem; }
   .principles-section { padding-block: 3.5rem; grid-template-columns: 1fr; gap: 2.5rem; }

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ const opportunities = [
 ];
 
 export function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pageRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -31,43 +32,26 @@ export function HomePage() {
             start: "top top",
             end: "bottom bottom",
             pin: stageRef.current,
-            scrub: 1,
+            scrub: true,
             anticipatePin: 1,
           },
         });
         timeline
           .to(copyRef.current, { opacity: 0, y: -80, duration: 0.35 }, 0)
           .to(productRef.current, { scale: 1.04, y: 0, duration: 1, ease: "none" }, 0)
-          .to(".hero-orbit", { scale: 1.45, opacity: 0.7, duration: 1, ease: "none" }, 0);
+          .to(".hero-orbit", { scale: 1.45, opacity: 1, "--orbit-progress": "317deg", duration: 1, ease: "none" }, 0);
 
         const panels = gsap.utils.toArray<HTMLElement>(".stack-panel", stackRef.current);
         panels.slice(0, -1).forEach((panel, index) => {
           gsap.to(panel, {
-            scale: 0.94,
-            opacity: 0.58,
+            scale: 0.975,
+            opacity: 0.82,
             ease: "none",
             scrollTrigger: {
               trigger: panels[index + 1],
               start: "top bottom",
               end: "top top",
               scrub: true,
-            },
-          });
-        });
-      });
-
-      media.add("(max-width: 768px)", () => {
-        const panels = gsap.utils.toArray<HTMLElement>(".stack-panel", stackRef.current);
-        panels.slice(0, -1).forEach((panel, index) => {
-          gsap.to(panel, {
-            scale: 0.975,
-            opacity: 0.78,
-            ease: "none",
-            scrollTrigger: {
-              trigger: panels[index + 1],
-              start: "top 92%",
-              end: "top 12px",
-              scrub: 0.6,
             },
           });
         });
@@ -85,12 +69,23 @@ export function HomePage() {
           <span className="home-brand-mark" aria-hidden="true">V</span>
           <span>Vyze</span>
         </Link>
-        <nav aria-label="Home navigation">
-          <a href="#how-it-works">How it works</a>
-          <a href="#workflows">Workflows</a>
-          <a href="#principles">Principles</a>
+        <button
+          className="home-menu-toggle"
+          type="button"
+          aria-expanded={isMenuOpen}
+          aria-controls="home-navigation"
+          aria-label={isMenuOpen ? "Close navigation" : "Open navigation"}
+          onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+        >
+          <span /><span />
+        </button>
+        <nav id="home-navigation" className={isMenuOpen ? "is-open" : ""} aria-label="Home navigation">
+          <a href="#how-it-works" onClick={() => setIsMenuOpen(false)}>How it works</a>
+          <a href="#workflows" onClick={() => setIsMenuOpen(false)}>Workflows</a>
+          <a href="#principles" onClick={() => setIsMenuOpen(false)}>Principles</a>
+          <Link className="mobile-contact-link" to="/contact" onClick={() => setIsMenuOpen(false)}>Contact us</Link>
         </nav>
-        <Link className="button button-dark" to="/workspace">Open workspace</Link>
+        <Link className="button button-dark home-contact-link" to="/contact">Contact us</Link>
       </header>
 
       <main>
@@ -98,15 +93,15 @@ export function HomePage() {
           <div className="home-hero-stage" ref={stageRef}>
             <div className="hero-orbit" aria-hidden="true" />
             <div className="hero-copy" ref={copyRef}>
-              <p className="eyebrow">Your local opportunity engine</p>
               <h1>Find the right work. Know why it matters.</h1>
               <p>
                 One private workspace for companies, roles, signals, relationships, and the next
                 move worth making.
               </p>
               <div className="hero-actions">
-                <Link className="button button-light" to="/workspace">Open workspace</Link>
-                <a className="button button-outline-light" href="#how-it-works">Explore Vyze</a>
+                <Link className="cta-button" to="/workspace">
+                  Open workspace <span aria-hidden="true">→</span>
+                </Link>
               </div>
             </div>
 
