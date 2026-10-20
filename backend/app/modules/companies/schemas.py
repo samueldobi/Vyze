@@ -13,7 +13,7 @@ from pydantic import (
     model_validator,
 )
 
-from app.modules.companies.domain import normalize_domain
+from app.modules.companies.normalization import normalize_domain
 
 _http_url_adapter = TypeAdapter(HttpUrl)
 

@@ -1,6 +1,6 @@
 import pytest
 
-from app.modules.companies.domain import normalize_domain
+from app.modules.companies.normalization import normalize_domain
 
 
 @pytest.mark.parametrize(
