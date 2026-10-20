@@ -280,8 +280,15 @@ export function HomePage() {
       </main>
 
       <footer className="home-footer">
-        <span>Vyze</span>
-        <p>Local-first opportunity discovery and relationship management.</p>
+        <div className="footer-inner">
+          <div className="footer-identity">
+            <span>Vyze</span>
+            <p>Local-first opportunity discovery and relationship management.</p>
+          </div>
+          <p className="footer-credit">
+            Built by <a href="https://my-portfolio-lac-one-14.vercel.app/" target="_blank" rel="noreferrer">samueldean</a>
+          </p>
+        </div>
       </footer>
     </div>
   );
