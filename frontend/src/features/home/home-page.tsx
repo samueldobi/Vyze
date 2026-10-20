@@ -32,14 +32,14 @@ export function HomePage() {
             start: "top top",
             end: "bottom bottom",
             pin: stageRef.current,
-            scrub: true,
+            scrub: 0.3,
             anticipatePin: 1,
           },
         });
         timeline
           .to(copyRef.current, { opacity: 0, y: -80, duration: 0.35 }, 0)
           .to(productRef.current, { scale: 1.04, y: 0, duration: 1, ease: "none" }, 0)
-          .to(".hero-orbit", { scale: 1.45, opacity: 1, "--orbit-progress": "317deg", duration: 1, ease: "none" }, 0);
+          .to(".hero-orbit", { scale: 1.45, opacity: 1, "--orbit-progress": "350deg", duration: 1, ease: "none" }, 0);
 
         const panels = gsap.utils.toArray<HTMLElement>(".stack-panel", stackRef.current);
         panels.slice(0, -1).forEach((panel, index) => {
@@ -51,7 +51,24 @@ export function HomePage() {
               trigger: panels[index + 1],
               start: "top bottom",
               end: "top top",
-              scrub: true,
+              scrub: 0.25,
+            },
+          });
+        });
+      });
+
+      media.add("(max-width: 768px)", () => {
+        const panels = gsap.utils.toArray<HTMLElement>(".stack-panel", stackRef.current);
+        panels.slice(0, -1).forEach((panel, index) => {
+          gsap.to(panel, {
+            scale: 0.985,
+            opacity: 0.9,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panels[index + 1],
+              start: "top 94%",
+              end: "top 18%",
+              scrub: 0.2,
             },
           });
         });
@@ -91,7 +108,7 @@ export function HomePage() {
       <main>
         <section className="home-hero-scroll" ref={heroRef}>
           <div className="home-hero-stage" ref={stageRef}>
-            <div className="hero-orbit" aria-hidden="true" />
+            <div className="hero-orbit" aria-hidden="true"><span className="hero-orbit-node" /></div>
             <div className="hero-copy" ref={copyRef}>
               <h1>Find the right work. Know why it matters.</h1>
               <p>
