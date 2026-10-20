@@ -17,6 +17,8 @@ export function HomePage() {
   const copyRef = useRef<HTMLDivElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
+  const workflowRef = useRef<HTMLElement>(null);
+  const workflowTrackRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (!window.matchMedia || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -60,6 +62,8 @@ export function HomePage() {
       media.add("(max-width: 768px)", () => {
         const panels = gsap.utils.toArray<HTMLElement>(".stack-panel", stackRef.current);
         panels.slice(0, -1).forEach((panel, index) => {
+          if (panel === workflowRef.current) return;
+
           gsap.to(panel, {
             scale: 0.985,
             opacity: 0.9,
@@ -72,6 +76,27 @@ export function HomePage() {
             },
           });
         });
+
+        const workflow = workflowRef.current;
+        const track = workflowTrackRef.current;
+        if (workflow && track) {
+          const horizontalDistance = () => Math.max(0, track.scrollWidth - workflow.clientWidth);
+
+          gsap.to(track, {
+            x: () => -horizontalDistance(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: workflow,
+              start: "top top",
+              end: () => `+=${horizontalDistance()}`,
+              pin: true,
+              pinSpacing: true,
+              scrub: 0.25,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
       });
       return () => media.revert();
     }, pageRef);
@@ -184,8 +209,8 @@ export function HomePage() {
             </div>
           </section>
 
-          <section className="stack-panel stack-panel-workflows" id="workflows">
-            <div className="workflow-grid">
+          <section className="stack-panel stack-panel-workflows" id="workflows" ref={workflowRef}>
+            <div className="workflow-grid" ref={workflowTrackRef}>
               <article className="workflow-card workflow-discover">
                 <span>01</span>
                 <h3>Discover</h3>
